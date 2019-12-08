@@ -1,0 +1,16 @@
+#main-header-row {
+    background: #333;
+    color: #f6f6f6;
+    text-align: center;
+}
+
+#search-sect {
+    background: #f6f6f6;
+}
+
+.five-day-card{
+    width: 19%;
+    /* background: rgb(73, 73, 255); */
+    background: #007bff;
+    color: #f6f6f6;
+}

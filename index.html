@@ -4,14 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://kit.fontawesome.com/80eed1293f.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/bootstrap.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <title>Weather Dashboard</title>
 </head>
 <body>
-
-    
-
+    <div class="container">
+        <div id="main-header-row" class="row">
+            <div class="col-12">
+                <header>
+                    <h1 class="py-2">Weather Dashboard</h1>
+                </header>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3" id="search-sect">
+                <h5>Search for a City:</h5>
+                <div class="input-group">
+                    <input id="city-search" type="text" class="form-control">
+                    <div class="input-group-append">
+                        <button id="search-button" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <ul class="list-group"></ul>
+            </div>
+            <div class="col-sm-9 pr-0">
+                <div id="main-weather-card" class="card my-2">
+                    <div class="card-body">
+                        <h3>
+                            <span id="city-name"></span> <span id="current-date"></span>
+                        </h3>
+                        <p>Temperature:  <span id="current-temperature"></span></p>
+                        <p>Humidity:  <span id="current-humidity"></span></p>
+                        <p>Wind Speed:  <span id="current-wind-speed"></span></p>
+                        <p>UV Index:  <span id="current-uv-index"></span></p>
+                    </div>
+                </div>
+                <h4>5-Day Forecast:</h4>
+                <div id="five-day-container" class="d-flex justify-content-between">
+                    <div class="card p-2 five-day-card">
+                        <h5>12/8/2019</h5>
+                        <div class="card-text">High: <span id="day-one-high"></span></div>
+                        <div class="card-text">Low: <span id="day-one-low"></span></div>
+                        <div class="card-text">Humidity: </div>
+                    </div>
+                    <div class="card p-2 five-day-card">
+                        <h5>12/9/2019</h5>
+                        <div class="card-text">High: <span id="day-two-high"></span></div>
+                        <div class="card-text">Low: <span id="day-two-low"></span></div>
+                        <div class="card-text">Humidity: </div>
+                    </div>
+                    <div class="card p-2 five-day-card">
+                        <h5>12/10/2019</h5>
+                        <div class="card-text">High: <span id="day-three-high"></span></div>
+                        <div class="card-text">Low: <span id="day-three-low"></span></div>
+                        <div class="card-text">Humidity: </div>
+                    </div>
+                    <div class="card p-2 five-day-card">
+                        <h5>12/11/2019</h5>
+                        <div class="card-text">High: <span id="day-four-high"></span></div>
+                        <div class="card-text">Low: <span id="day-four-low"></span></div>
+                        <div class="card-text">Humidity: </div>
+                    </div>
+                    <div class="card p-2 five-day-card">
+                        <h5>12/12/2019</h5>
+                        <div class="card-text">High: <span id="day-five-high"></span></div>
+                        <div class="card-text">Low: <span id="day-five-low"></span></div>
+                        <div class="card-text">Humidity: </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="./assets/js/jquery-3.4.1.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
