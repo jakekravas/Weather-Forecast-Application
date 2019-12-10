@@ -8,8 +8,36 @@
     background: #f6f6f6;
 }
 
-.five-day-card{
+#forecast-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.forecast-card{
     width: 19%;
     background: #007bff;
     color: #f6f6f6;
+}
+
+@media (max-width: 767px){
+    #forecast-header{
+        text-align: center;
+    }
+
+    #forecast-container{
+        flex-direction: column;
+    }
+
+    .forecast-card{
+        text-align: center;
+        width: 80%;
+        padding: 20px;
+        margin: 0 auto;
+        margin-bottom: .6rem;
+    }
+
+    .fc-weather-icon{
+        margin: 0 auto;
+    }
+
 }
