@@ -56,37 +56,22 @@ function handleRecents(res){
 }
 
 function currentConditions(res){
+    console.log(res);
     let cityName = res.name;
     let currentTemp = (res.main.temp-273.15) * 1.8 + 32;
     let currentHumidity = res.main.humidity;
     let currentWindSpeed = res.wind.speed * 2.237;
-    let currentWeatheState = res.weather[0].main;
-
-    if (currentWeatheState == "Clouds"){
-        $("#current-weather").html($("<i>").addClass("fas fa-cloud"));
-    } else if (currentWeatheState == "Clear"){
-        $("#current-weather").html($("<i>").addClass("fas fa-sun"));
-    } else if (currentWeatheState == "Rain"){
-        $("#current-weather").html($("<i>").addClass("fas fa-cloud-showers-heavy"));
-    } else if (currentWeatheState == "Thunderstorm"){
-        $("#current-weather").html($("<i>").addClass("fas fa-poo-storm"));
-    } else if (currentWeatheState == "Snow"){
-        $("#current-weather").html($("<i>").addClass("far fa-snowflake"));
-    }
 
     $("#city-name").text(cityName);
+    $("#current-weather").attr("src", "http://openweathermap.org/img/wn/" + res.weather[0].icon + "@2x.png");
     $("#current-temperature").text(currentTemp.toFixed() + "°");
     $("#current-humidity").text(currentHumidity + "%");
     $("#current-wind-speed").text(currentWindSpeed.toFixed(1) + " mph");
 }
 
 function fiveDayForecast(res){
+    console.log(res);
     let weatherIntervals = res.list;
-    let weatherArrayOne = [];
-    let weatherArrayTwo = [];
-    let weatherArrayThree = [];
-    let weatherArrayFour = [];
-    let weatherArrayFive = [];
 
     let dayOneLow = null;
     let dayOneHigh = null;
@@ -107,7 +92,6 @@ function fiveDayForecast(res){
 
     // Getting high and low temperatures of day one
     for (i = 0; i < 8; i++){
-        weatherArrayOne.push(weatherIntervals[i].weather[0].main);
         dayOneHumidity += weatherIntervals[i].main.humidity;
         if (dayOneLow > weatherIntervals[i].main.temp_min || dayOneLow == null){
             dayOneLow = weatherIntervals[i].main.temp_min;
@@ -117,29 +101,17 @@ function fiveDayForecast(res){
         }
     }
 
-    // Grabbing weather state for middle of day one and displaying it
-    if (weatherArrayOne[4] == "Clouds"){
-        $("#day-one-weather").html($("<i>").addClass("fas fa-cloud"));
-    } else if (weatherArrayOne[4] == "Clear") {
-        $("#day-one-weather").html($("<i>").addClass("fas fa-sun"));
-    } else if (weatherArrayOne[4] == "Rain"){
-        $("#day-one-weather").html($("<i>").addClass("fas fa-cloud-showers-heavy"));
-    } else if (weatherArrayOne[4] == "Thunderstorm"){
-        $("#day-one-weather").html($("<i>").addClass("fas fa-poo-storm"));
-    } else if (weatherArrayOne[4] == "Snow"){
-        $("#day-one-weather").html($("<i>").addClass("far fa-snowflake"));
-    }
-
     dayOneHumidity = dayOneHumidity / 8;
     dayOneLow = ((dayOneLow - 273.15) * 1.8) + 32;
     dayOneHigh = ((dayOneHigh - 273.15) * 1.8) + 32;
+    // $("#day-one-date").text(weatherIntervals[4].dt_txt);
     $("#day-one-high").text(dayOneHigh.toFixed() + "°");
     $("#day-one-low").text(dayOneLow.toFixed() + "°");
     $("#day-one-humidity").text(dayOneHumidity.toFixed() + "%");
+    $("#day-one-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[4].weather[0].icon + "@2x.png");
 
     // Getting high and low temperatures of day two
     for (i = 8; i < 16; i++){
-        weatherArrayTwo.push(weatherIntervals[i].weather[0].main);
         dayTwoHumidity += weatherIntervals[i].main.humidity;
         if (dayTwoLow > weatherIntervals[i].main.temp_min || dayTwoLow == null){
             dayTwoLow = weatherIntervals[i].main.temp_min;
@@ -148,30 +120,18 @@ function fiveDayForecast(res){
             dayTwoHigh = weatherIntervals[i].main.temp_max;
         }
     }
-
-    // Grabbing weather state for middle of day two and displaying it
-    if (weatherArrayTwo[4] == "Clouds"){
-        $("#day-two-weather").html($("<i>").addClass("fas fa-cloud"));
-    } else if (weatherArrayTwo[4] == "Clear") {
-        $("#day-two-weather").html($("<i>").addClass("fas fa-sun"));
-    } else if (weatherArrayTwo[4] == "Rain"){
-        $("#day-two-weather").html($("<i>").addClass("fas fa-cloud-showers-heavy"));
-    } else if (weatherArrayTwo[4] == "Thunderstorm"){
-        $("#day-two-weather").html($("<i>").addClass("fas fa-poo-storm"));
-    } else if (weatherArrayTwo[4] == "Snow"){
-        $("#day-two-weather").html($("<i>").addClass("far fa-snowflake"));
-    }
     
     dayTwoHumidity = dayTwoHumidity / 8;
     dayTwoLow = ((dayTwoLow - 273.15) * 1.8) + 32;
     dayTwoHigh = ((dayTwoHigh - 273.15) * 1.8) + 32;
+    // $("#day-two-date").text(weatherIntervals[12].dt_txt);
     $("#day-two-high").text(dayTwoHigh.toFixed() + "°");
     $("#day-two-low").text(dayTwoLow.toFixed() + "°");
     $("#day-two-humidity").text(dayTwoHumidity.toFixed() + "%");
+    $("#day-two-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[12].weather[0].icon + "@2x.png");
 
     // Getting high and low temperatures of day three
     for (i = 16; i < 24; i++){
-        weatherArrayThree.push(weatherIntervals[i].weather[0].main);
         dayThreeHumidity += weatherIntervals[i].main.humidity;
         if (dayThreeLow > weatherIntervals[i].main.temp_min || dayThreeLow == null){
             dayThreeLow = weatherIntervals[i].main.temp_min;
@@ -181,29 +141,17 @@ function fiveDayForecast(res){
         }
     }
 
-    // Grabbing weather state for middle of day two and displaying it
-    if (weatherArrayThree[4] == "Clouds"){
-        $("#day-three-weather").html($("<i>").addClass("fas fa-cloud"));
-    } else if (weatherArrayThree[4] == "Clear") {
-        $("#day-three-weather").html($("<i>").addClass("fas fa-sun"));
-    } else if (weatherArrayThree[4] == "Rain"){
-        $("#day-three-weather").html($("<i>").addClass("fas fa-cloud-showers-heavy"));
-    } else if (weatherArrayThree[4] == "Thunderstorm"){
-        $("#day-three-weather").html($("<i>").addClass("fas fa-poo-storm"));
-    } else if (weatherArrayThree[4] == "Snow"){
-        $("#day-three-weather").html($("<i>").addClass("far fa-snowflake"));
-    }
-
     dayThreeHumidity = dayThreeHumidity / 8;
     dayThreeLow = ((dayThreeLow - 273.15) * 1.8) + 32;
     dayThreeHigh = ((dayThreeHigh - 273.15) * 1.8) + 32;
+    // $("#day-three-date").text(weatherIntervals[20].dt_txt);
     $("#day-three-high").text(dayThreeHigh.toFixed() + "°");
     $("#day-three-low").text(dayThreeLow.toFixed() + "°");
     $("#day-three-humidity").text(dayThreeHumidity.toFixed() + "%");
+    $("#day-three-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[20].weather[0].icon + "@2x.png");
 
     // Getting high and low temperatures of day four
     for (i = 24; i < 32; i++){
-        weatherArrayFour.push(weatherIntervals[i].weather[0].main);
         dayFourHumidity += weatherIntervals[i].main.humidity;
         if (dayFourLow > weatherIntervals[i].main.temp_min || dayFourLow == null){
             dayFourLow = weatherIntervals[i].main.temp_min;
@@ -213,28 +161,17 @@ function fiveDayForecast(res){
         }
     }
 
-    if (weatherArrayFour[4] == "Clouds"){
-        $("#day-four-weather").html($("<i>").addClass("fas fa-cloud"));
-    } else if (weatherArrayFour[4] == "Clear") {
-        $("#day-four-weather").html($("<i>").addClass("fas fa-sun"));
-    } else if (weatherArrayFour[4] == "Rain"){
-        $("#day-four-weather").html($("<i>").addClass("fas fa-cloud-showers-heavy"));
-    } else if (weatherArrayFour[4] == "Thunderstorm"){
-        $("#day-four-weather").html($("<i>").addClass("fas fa-poo-storm"));
-    } else if (weatherArrayFour[4] == "Snow"){
-        $("#day-four-weather").html($("<i>").addClass("far fa-snowflake"));
-    }
-
     dayFourHumidity = dayFourHumidity / 8;
     dayFourLow = ((dayFourLow - 273.15) * 1.8) + 32;
     dayFourHigh = ((dayFourHigh - 273.15) * 1.8) + 32;
+    // $("#day-four-date").text(weatherIntervals[28].dt_txt);
     $("#day-four-high").text(dayFourHigh.toFixed() + "°");
     $("#day-four-low").text(dayFourLow.toFixed() + "°");
     $("#day-four-humidity").text(dayFourHumidity.toFixed() + "%");
+    $("#day-four-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[28].weather[0].icon + "@2x.png");
 
     // Getting high and low temperatures of day five
     for (i = 32; i < 40; i++){
-        weatherArrayFive.push(weatherIntervals[i].weather[0].main);
         dayFiveHumidity += weatherIntervals[i].main.humidity;
         if (dayFiveLow > weatherIntervals[i].main.temp_min || dayFiveLow == null){
             dayFiveLow = weatherIntervals[i].main.temp_min;
@@ -244,24 +181,14 @@ function fiveDayForecast(res){
         }
     }
 
-    if (weatherArrayFive[4] == "Clouds"){
-        $("#day-five-weather").html($("<i>").addClass("fas fa-cloud"));
-    } else if (weatherArrayFive[4] == "Clear") {
-        $("#day-five-weather").html($("<i>").addClass("fas fa-sun"));
-    } else if (weatherArrayFive[4] == "Rain"){
-        $("#day-five-weather").html($("<i>").addClass("fas fa-cloud-showers-heavy"));
-    } else if (weatherArrayFive[4] == "Thunderstorm"){
-        $("#day-five-weather").html($("<i>").addClass("fas fa-poo-storm"));
-    } else if (weatherArrayFive[4] == "Snow"){
-        $("#day-five-weather").html($("<i>").addClass("far fa-snowflake"));
-    }
-
     dayFiveHumidity = dayFiveHumidity / 8;
     dayFiveLow = ((dayFiveLow - 273.15) * 1.8) + 32;
     dayFiveHigh = ((dayFiveHigh - 273.15) * 1.8) + 32;
+    // $("#day-five-date").text(weatherIntervals[36].dt_txt);
     $("#day-five-high").text(dayFiveHigh.toFixed() + "°");
     $("#day-five-low").text(dayFiveLow.toFixed() + "°");
     $("#day-five-humidity").text(dayFiveHumidity.toFixed() + "%");
+    $("#day-five-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[36].weather[0].icon + "@2x.png");
 }
 
 function setDates(){
@@ -270,7 +197,7 @@ function setDates(){
     let currentDay = date.getDate();
     let currentMonth = date.getMonth() + 1;
     let currentYear = date.getFullYear();
-    let currentDate = "(" + currentMonth + "/" + currentDay + "/" + currentYear + ")";
+    let currentDate = + currentMonth + "-" + currentDay + "-" + currentYear;
     $("#current-date").text(currentDate);
 
     // Declaring variables for each forecast date
@@ -309,45 +236,16 @@ function setDates(){
     let fcFiveYear = fcFive.getFullYear();
 
     // Declaring variables to hold a formatted strings of each forecast date
-    let fcOneDate = "(" + fcOneMonth + "/" + fcOneDay + "/" + fcOneYear + ")";
-    let fcTwoDate = "(" + fcTwoMonth + "/" + fcTwoDay + "/" + fcTwoYear + ")";
-    let fcThreeDate = "(" + fcThreeMonth + "/" + fcThreeDay + "/" + fcThreeYear + ")";
-    let fcFourDate = "(" + fcFourMonth + "/" + fcFourDay + "/" + fcFourYear + ")";
-    let fcFiveDate = "(" + fcFiveMonth + "/" + fcFiveDay + "/" + fcFiveYear + ")";
+    let fcOneDate = + fcOneMonth + "-" + fcOneDay + "-" + fcOneYear;
+    let fcTwoDate = + fcTwoMonth + "-" + fcTwoDay + "-" + fcTwoYear;
+    let fcThreeDate = + fcThreeMonth + "-" + fcThreeDay + "-" + fcThreeYear;
+    let fcFourDate = + fcFourMonth + "-" + fcFourDay + "-" + fcFourYear;
+    let fcFiveDate = + fcFiveMonth + "-" + fcFiveDay + "-" + fcFiveYear;
 
     // Appending forecast dates to page
-    $("#fc-one-date").text(fcOneDate);
-    $("#fc-two-date").text(fcTwoDate);
-    $("#fc-three-date").text(fcThreeDate);
-    $("#fc-four-date").text(fcFourDate);
-    $("#fc-five-date").text(fcFiveDate);
+    $("#day-one-date").text(fcOneDate);
+    $("#day-two-date").text(fcTwoDate);
+    $("#day-three-date").text(fcThreeDate);
+    $("#day-four-date").text(fcFourDate);
+    $("#day-five-date").text(fcFiveDate);
 };
-
-// function handleRecents(res){
-//     let recentLink = $("<a>").addClass("list-group-item");
-//     recentLink.attr("href", "#");
-//     recentLink.text(res.name);
-//     $("#recent-searches").prepend(recentLink);
-
-//     recentLink.on("click", function(){
-//         let recentCity = $(this).text();
-//         let currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + recentCity + "&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
-//         let fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + recentCity + ",us&mode=json&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
-        
-//         $.ajax({
-//             url: currentQueryURL,
-//             method: "GET"
-//         }).then(function(response){
-//             currentConditions(response);
-//             setDates();
-//         });
-
-//         $.ajax({
-//             url: fiveDayQueryURL,
-//             method: "GET"
-//         }).then(function(response){
-//             fiveDayForecast(response);
-//         });
-
-//     })
-// }
