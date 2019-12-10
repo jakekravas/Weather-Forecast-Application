@@ -1,16 +1,26 @@
-$("#search-button").on("click", getCity);
+$("#search-button").on("click", getSearchedCity);
 
-function getCity(){
-    let citySearch = $("#city-search").val();
-    let currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearch + "&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
-    let fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + citySearch + ",us&mode=json&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
+function getSearchedCity(){
+    let searchedCity = $("#city-search").val();
+    getWeather(searchedCity);
+};
 
+function getRecentCity(){
+    let recentCity = $(this).text();
+    getWeather(recentCity);
+}
+
+function getWeather(city){
+    let currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
+    let fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + ",us&mode=json&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
+    
     $.ajax({
         url: currentQueryURL,
         method: "GET"
     }).then(function(response){
-        currentConditions(response);
         setDates();
+        getCurrentWeather(response);
+        getUvIndex(response);
         handleRecents(response);
     });
 
@@ -18,49 +28,34 @@ function getCity(){
         url: fiveDayQueryURL,
         method: "GET"
     }).then(function(response){
-        fiveDayForecast(response);
+        getFiveDayForecast(response);
     });
-};
+}
 
 let recentsArray = [];
 function handleRecents(res){
     let recentLink = $("<a>").addClass("list-group-item");
     recentLink.attr("href", "#");
 
+    // Only prepends link if it's not already viewable in recent searches
     if (recentsArray.includes(res.name) == false){
         recentsArray.push(res.name);
         recentLink.text(res.name);
         $("#recent-searches").prepend(recentLink);
+
+        //Prevents page from being flooded with recent searches
+        if ($("#recent-searches").children().length > 8){
+            $("#recent-searches").children().last().remove();
+        }
     }
-
-    recentLink.on("click", function(){
-        let recentCity = $(this).text();
-        let currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + recentCity + "&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
-        let fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + recentCity + ",us&mode=json&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
-        
-        $.ajax({
-            url: currentQueryURL,
-            method: "GET"
-        }).then(function(response){
-            currentConditions(response);
-            setDates();
-        });
-
-        $.ajax({
-            url: fiveDayQueryURL,
-            method: "GET"
-        }).then(function(response){
-            fiveDayForecast(response);
-        });
-    });
+    recentLink.on("click", getRecentCity);
 }
 
-function currentConditions(res){
-    console.log(res);
+function getCurrentWeather(res){
     let cityName = res.name;
-    let currentTemp = (res.main.temp-273.15) * 1.8 + 32;
+    let currentTemp = (res.main.temp-273.15) * 1.8 + 32; //converting from kelvin to farenheit
     let currentHumidity = res.main.humidity;
-    let currentWindSpeed = res.wind.speed * 2.237;
+    let currentWindSpeed = res.wind.speed * 2.237; //converting from meters per second to miles per hour
 
     $("#city-name").text(cityName);
     $("#current-weather").attr("src", "http://openweathermap.org/img/wn/" + res.weather[0].icon + "@2x.png");
@@ -69,8 +64,18 @@ function currentConditions(res){
     $("#current-wind-speed").text(currentWindSpeed.toFixed(1) + " mph");
 }
 
-function fiveDayForecast(res){
-    console.log(res);
+function getUvIndex(res){
+    let uvIndexURL = "http://api.openweathermap.org/data/2.5/uvi?appid=" + "bc0e6a9a6e2ed4c45d519d424670be13" + "&lat=" + res.coord.lat + "&lon=" + res.coord.lon;
+    $.ajax({
+        url: uvIndexURL,
+        method: "GET"
+    }).then(function(response){
+        $("#current-uv-index").text(response.value);
+        $("#current-uv-index").css("display", "initial");
+    })
+}
+
+function getFiveDayForecast(res){
     let weatherIntervals = res.list;
 
     let dayOneLow = null;
