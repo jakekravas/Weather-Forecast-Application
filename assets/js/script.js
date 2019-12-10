@@ -22,6 +22,39 @@ function getCity(){
     });
 };
 
+let recentsArray = [];
+function handleRecents(res){
+    let recentLink = $("<a>").addClass("list-group-item");
+    recentLink.attr("href", "#");
+
+    if (recentsArray.includes(res.name) == false){
+        recentsArray.push(res.name);
+        recentLink.text(res.name);
+        $("#recent-searches").prepend(recentLink);
+    }
+
+    recentLink.on("click", function(){
+        let recentCity = $(this).text();
+        let currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + recentCity + "&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
+        let fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + recentCity + ",us&mode=json&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
+        
+        $.ajax({
+            url: currentQueryURL,
+            method: "GET"
+        }).then(function(response){
+            currentConditions(response);
+            setDates();
+        });
+
+        $.ajax({
+            url: fiveDayQueryURL,
+            method: "GET"
+        }).then(function(response){
+            fiveDayForecast(response);
+        });
+    });
+}
+
 function currentConditions(res){
     let cityName = res.name;
     let currentTemp = (res.main.temp-273.15) * 1.8 + 32;
@@ -48,7 +81,6 @@ function currentConditions(res){
 }
 
 function fiveDayForecast(res){
-    console.log(res);
     let weatherIntervals = res.list;
     let weatherArrayOne = [];
     let weatherArrayTwo = [];
@@ -76,7 +108,6 @@ function fiveDayForecast(res){
     // Getting high and low temperatures of day one
     for (i = 0; i < 8; i++){
         weatherArrayOne.push(weatherIntervals[i].weather[0].main);
-        // console.log(weatherArrayOne);
         dayOneHumidity += weatherIntervals[i].main.humidity;
         if (dayOneLow > weatherIntervals[i].main.temp_min || dayOneLow == null){
             dayOneLow = weatherIntervals[i].main.temp_min;
@@ -87,7 +118,6 @@ function fiveDayForecast(res){
     }
 
     // Grabbing weather state for middle of day one and displaying it
-    console.log("Day 1: " + weatherArrayOne[4]);
     if (weatherArrayOne[4] == "Clouds"){
         $("#day-one-weather").html($("<i>").addClass("fas fa-cloud"));
     } else if (weatherArrayOne[4] == "Clear") {
@@ -120,7 +150,6 @@ function fiveDayForecast(res){
     }
 
     // Grabbing weather state for middle of day two and displaying it
-    console.log("Day 2: " + weatherArrayTwo[4]);
     if (weatherArrayTwo[4] == "Clouds"){
         $("#day-two-weather").html($("<i>").addClass("fas fa-cloud"));
     } else if (weatherArrayTwo[4] == "Clear") {
@@ -153,7 +182,6 @@ function fiveDayForecast(res){
     }
 
     // Grabbing weather state for middle of day two and displaying it
-    console.log("Day 3: " + weatherArrayThree[4]);
     if (weatherArrayThree[4] == "Clouds"){
         $("#day-three-weather").html($("<i>").addClass("fas fa-cloud"));
     } else if (weatherArrayThree[4] == "Clear") {
@@ -185,7 +213,6 @@ function fiveDayForecast(res){
         }
     }
 
-    console.log("Day 4: " + weatherArrayFour[4]);
     if (weatherArrayFour[4] == "Clouds"){
         $("#day-four-weather").html($("<i>").addClass("fas fa-cloud"));
     } else if (weatherArrayFour[4] == "Clear") {
@@ -217,7 +244,6 @@ function fiveDayForecast(res){
         }
     }
 
-    console.log("Day 5: " + weatherArrayFive[4]);
     if (weatherArrayFive[4] == "Clouds"){
         $("#day-five-weather").html($("<i>").addClass("fas fa-cloud"));
     } else if (weatherArrayFive[4] == "Clear") {
@@ -297,31 +323,31 @@ function setDates(){
     $("#fc-five-date").text(fcFiveDate);
 };
 
-function handleRecents(res){
-    let recentLink = $("<a>").addClass("list-group-item");
-    recentLink.attr("href", "#");
-    recentLink.text(res.name);
-    $("#recent-searches").prepend(recentLink);
+// function handleRecents(res){
+//     let recentLink = $("<a>").addClass("list-group-item");
+//     recentLink.attr("href", "#");
+//     recentLink.text(res.name);
+//     $("#recent-searches").prepend(recentLink);
 
-    recentLink.on("click", function(){
-        let recentCity = $(this).text();
-        let currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + recentCity + "&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
-        let fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + recentCity + ",us&mode=json&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
+//     recentLink.on("click", function(){
+//         let recentCity = $(this).text();
+//         let currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + recentCity + "&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
+//         let fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + recentCity + ",us&mode=json&APPID=bc0e6a9a6e2ed4c45d519d424670be13";
         
-        $.ajax({
-            url: currentQueryURL,
-            method: "GET"
-        }).then(function(response){
-            currentConditions(response);
-            setDates();
-        });
+//         $.ajax({
+//             url: currentQueryURL,
+//             method: "GET"
+//         }).then(function(response){
+//             currentConditions(response);
+//             setDates();
+//         });
 
-        $.ajax({
-            url: fiveDayQueryURL,
-            method: "GET"
-        }).then(function(response){
-            fiveDayForecast(response);
-        });
+//         $.ajax({
+//             url: fiveDayQueryURL,
+//             method: "GET"
+//         }).then(function(response){
+//             fiveDayForecast(response);
+//         });
 
-    })
-}
+//     })
+// }
