@@ -77,6 +77,7 @@ function getUvIndex(res){
 }
 
 function getFiveDayForecast(res){
+    console.log(res);
     let weatherIntervals = res.list;
 
     let dayOneLow = null;
@@ -112,7 +113,7 @@ function getFiveDayForecast(res){
     $("#day-one-high").text(dayOneHigh.toFixed() + " °F");
     $("#day-one-low").text(dayOneLow.toFixed() + " °F");
     $("#day-one-humidity").text(dayOneHumidity.toFixed() + "%");
-    $("#day-one-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[4].weather[0].icon + "@2x.png");
+    $("#day-one-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[5].weather[0].icon + "@2x.png");
 
     // Getting high and low temperatures of day two
     for (i = 8; i < 16; i++){
@@ -130,7 +131,7 @@ function getFiveDayForecast(res){
     $("#day-two-high").text(dayTwoHigh.toFixed() + " °F");
     $("#day-two-low").text(dayTwoLow.toFixed() + " °F");
     $("#day-two-humidity").text(dayTwoHumidity.toFixed() + "%");
-    $("#day-two-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[12].weather[0].icon + "@2x.png");
+    $("#day-two-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[13].weather[0].icon + "@2x.png");
 
     // Getting high and low temperatures of day three
     for (i = 16; i < 24; i++){
@@ -148,7 +149,7 @@ function getFiveDayForecast(res){
     $("#day-three-high").text(dayThreeHigh.toFixed() + " °F");
     $("#day-three-low").text(dayThreeLow.toFixed() + " °F");
     $("#day-three-humidity").text(dayThreeHumidity.toFixed() + "%");
-    $("#day-three-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[20].weather[0].icon + "@2x.png");
+    $("#day-three-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[21].weather[0].icon + "@2x.png");
 
     // Getting high and low temperatures of day four
     for (i = 24; i < 32; i++){
@@ -166,7 +167,7 @@ function getFiveDayForecast(res){
     $("#day-four-high").text(dayFourHigh.toFixed() + " °F");
     $("#day-four-low").text(dayFourLow.toFixed() + " °F");
     $("#day-four-humidity").text(dayFourHumidity.toFixed() + "%");
-    $("#day-four-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[28].weather[0].icon + "@2x.png");
+    $("#day-four-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[29].weather[0].icon + "@2x.png");
 
     // Getting high and low temperatures of day five
     for (i = 32; i < 40; i++){
@@ -184,7 +185,7 @@ function getFiveDayForecast(res){
     $("#day-five-high").text(dayFiveHigh.toFixed() + " °F");
     $("#day-five-low").text(dayFiveLow.toFixed() + " °F");
     $("#day-five-humidity").text(dayFiveHumidity.toFixed() + "%");
-    $("#day-five-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[36].weather[0].icon + "@2x.png");
+    $("#day-five-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[37].weather[0].icon + "@2x.png");
 }
 
 function setDates(){
