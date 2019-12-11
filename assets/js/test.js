@@ -60,7 +60,7 @@ function getCurrentWeather(res){
 
     $("#city-name").text(cityName);
     $("#current-weather").attr("src", "http://openweathermap.org/img/wn/" + res.weather[0].icon + "@2x.png");
-    $("#current-temperature").text(currentTemp.toFixed() + " °F");
+    $("#current-temperature").text(currentTemp.toFixed() + "°");
     $("#current-humidity").text(currentHumidity + "%");
     $("#current-wind-speed").text(currentWindSpeed.toFixed(1) + " mph");
 }
@@ -109,8 +109,8 @@ function getFiveDayForecast(res){
 
     dayOneHumidity = dayOneHumidity / 8;
     // $("#day-one-date").text(weatherIntervals[4].dt_txt);
-    $("#day-one-high").text(dayOneHigh.toFixed() + " °F");
-    $("#day-one-low").text(dayOneLow.toFixed() + " °F");
+    $("#day-one-high").text(dayOneHigh.toFixed() + "°");
+    $("#day-one-low").text(dayOneLow.toFixed() + "°");
     $("#day-one-humidity").text(dayOneHumidity.toFixed() + "%");
     $("#day-one-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[4].weather[0].icon + "@2x.png");
 
@@ -127,8 +127,8 @@ function getFiveDayForecast(res){
     
     dayTwoHumidity = dayTwoHumidity / 8;
     // $("#day-two-date").text(weatherIntervals[12].dt_txt);
-    $("#day-two-high").text(dayTwoHigh.toFixed() + " °F");
-    $("#day-two-low").text(dayTwoLow.toFixed() + " °F");
+    $("#day-two-high").text(dayTwoHigh.toFixed() + "°");
+    $("#day-two-low").text(dayTwoLow.toFixed() + "°");
     $("#day-two-humidity").text(dayTwoHumidity.toFixed() + "%");
     $("#day-two-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[12].weather[0].icon + "@2x.png");
 
@@ -145,8 +145,8 @@ function getFiveDayForecast(res){
 
     dayThreeHumidity = dayThreeHumidity / 8;
     // $("#day-three-date").text(weatherIntervals[20].dt_txt);
-    $("#day-three-high").text(dayThreeHigh.toFixed() + " °F");
-    $("#day-three-low").text(dayThreeLow.toFixed() + " °F");
+    $("#day-three-high").text(dayThreeHigh.toFixed() + "°");
+    $("#day-three-low").text(dayThreeLow.toFixed() + "°");
     $("#day-three-humidity").text(dayThreeHumidity.toFixed() + "%");
     $("#day-three-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[20].weather[0].icon + "@2x.png");
 
@@ -163,8 +163,8 @@ function getFiveDayForecast(res){
 
     dayFourHumidity = dayFourHumidity / 8;
     // $("#day-four-date").text(weatherIntervals[28].dt_txt);
-    $("#day-four-high").text(dayFourHigh.toFixed() + " °F");
-    $("#day-four-low").text(dayFourLow.toFixed() + " °F");
+    $("#day-four-high").text(dayFourHigh.toFixed() + "°");
+    $("#day-four-low").text(dayFourLow.toFixed() + "°");
     $("#day-four-humidity").text(dayFourHumidity.toFixed() + "%");
     $("#day-four-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[28].weather[0].icon + "@2x.png");
 
@@ -181,8 +181,8 @@ function getFiveDayForecast(res){
 
     dayFiveHumidity = dayFiveHumidity / 8;
     // $("#day-five-date").text(weatherIntervals[36].dt_txt);
-    $("#day-five-high").text(dayFiveHigh.toFixed() + " °F");
-    $("#day-five-low").text(dayFiveLow.toFixed() + " °F");
+    $("#day-five-high").text(dayFiveHigh.toFixed() + "°");
+    $("#day-five-low").text(dayFiveLow.toFixed() + "°");
     $("#day-five-humidity").text(dayFiveHumidity.toFixed() + "%");
     $("#day-five-weather").attr("src", "http://openweathermap.org/img/wn/" + weatherIntervals[36].weather[0].icon + "@2x.png");
 }
