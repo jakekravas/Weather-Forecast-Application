@@ -52,7 +52,6 @@ function handleRecents(res){
 }
 
 function getCurrentWeather(res){
-    console.log(res);
     let cityName = res.name;
     let currentTemp = res.main.temp;
     let currentHumidity = res.main.humidity;
@@ -77,7 +76,6 @@ function getUvIndex(res){
 }
 
 function getFiveDayForecast(res){
-    console.log(res);
     let weatherIntervals = res.list;
 
     let dayOneLow = null;
