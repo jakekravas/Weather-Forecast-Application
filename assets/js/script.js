@@ -1,18 +1,18 @@
 $("#search-button").on("click", getSearchedCity);
 
-function getSearchedCity(){
+function getSearchedCity(){ //Getting weather data from searched city
     let searchedCity = $("#city-search").val();
     getWeather(searchedCity);
 };
 
-function getRecentCity(){
+function getRecentCity(){ //Getting weather data from recent city
     let recentCity = $(this).text();
     getWeather(recentCity);
 }
 
 function getWeather(city){
-    let currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=bc0e6a9a6e2ed4c45d519d424670be13&units=imperial";
-    let fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + ",us&mode=json&APPID=bc0e6a9a6e2ed4c45d519d424670be13&units=imperial";
+    let currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=bc0e6a9a6e2ed4c45d519d424670be13&units=imperial"; //API url for current weather
+    let fiveDayQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + ",us&mode=json&APPID=bc0e6a9a6e2ed4c45d519d424670be13&units=imperial"; //API url for five-day forecast
     
     $.ajax({
         url: currentQueryURL,
@@ -43,7 +43,7 @@ function handleRecents(res){
         recentLink.text(res.name);
         $("#recent-searches").prepend(recentLink);
 
-        //Prevents page from being flooded with recent searches
+        // Preventing page from being flooded with recent searches
         if ($("#recent-searches").children().length > 8){
             $("#recent-searches").children().last().remove();
         }
@@ -57,6 +57,7 @@ function getCurrentWeather(res){
     let currentHumidity = res.main.humidity;
     let currentWindSpeed = res.wind.speed;
 
+    // Appends weather data to page
     $("#city-name").text(cityName);
     $("#current-weather").attr("src", "http://openweathermap.org/img/wn/" + res.weather[0].icon + "@2x.png");
     $("#current-temperature").text(currentTemp.toFixed() + " °F");
@@ -78,6 +79,7 @@ function getUvIndex(res){
 function getFiveDayForecast(res){
     let weatherIntervals = res.list;
 
+    // Declaring variables for high and low temperatures for five day forecast
     let dayOneLow = null;
     let dayOneHigh = null;
     let dayTwoLow = null;
@@ -89,6 +91,7 @@ function getFiveDayForecast(res){
     let dayFiveLow = null;
     let dayFiveHigh = null;
 
+    // Declaring variables for humidity for five day forecast
     let dayOneHumidity = 0;
     let dayTwoHumidity = 0;
     let dayThreeHumidity = 0;
@@ -106,8 +109,7 @@ function getFiveDayForecast(res){
         }
     }
 
-    dayOneHumidity = dayOneHumidity / 8;
-    // $("#day-one-date").text(weatherIntervals[4].dt_txt);
+    dayOneHumidity = dayOneHumidity / 8; //Averaging out humidity for the day
     $("#day-one-high").text(dayOneHigh.toFixed() + " °F");
     $("#day-one-low").text(dayOneLow.toFixed() + " °F");
     $("#day-one-humidity").text(dayOneHumidity.toFixed() + "%");
@@ -124,8 +126,7 @@ function getFiveDayForecast(res){
         }
     }
     
-    dayTwoHumidity = dayTwoHumidity / 8;
-    // $("#day-two-date").text(weatherIntervals[12].dt_txt);
+    dayTwoHumidity = dayTwoHumidity / 8; //Averaging out humidity for the day
     $("#day-two-high").text(dayTwoHigh.toFixed() + " °F");
     $("#day-two-low").text(dayTwoLow.toFixed() + " °F");
     $("#day-two-humidity").text(dayTwoHumidity.toFixed() + "%");
@@ -142,8 +143,7 @@ function getFiveDayForecast(res){
         }
     }
 
-    dayThreeHumidity = dayThreeHumidity / 8;
-    // $("#day-three-date").text(weatherIntervals[20].dt_txt);
+    dayThreeHumidity = dayThreeHumidity / 8; //Averaging out humidity for the day
     $("#day-three-high").text(dayThreeHigh.toFixed() + " °F");
     $("#day-three-low").text(dayThreeLow.toFixed() + " °F");
     $("#day-three-humidity").text(dayThreeHumidity.toFixed() + "%");
@@ -160,8 +160,7 @@ function getFiveDayForecast(res){
         }
     }
 
-    dayFourHumidity = dayFourHumidity / 8;
-    // $("#day-four-date").text(weatherIntervals[28].dt_txt);
+    dayFourHumidity = dayFourHumidity / 8; //Averaging out humidity for the day
     $("#day-four-high").text(dayFourHigh.toFixed() + " °F");
     $("#day-four-low").text(dayFourLow.toFixed() + " °F");
     $("#day-four-humidity").text(dayFourHumidity.toFixed() + "%");
@@ -178,8 +177,7 @@ function getFiveDayForecast(res){
         }
     }
 
-    dayFiveHumidity = dayFiveHumidity / 8;
-    // $("#day-five-date").text(weatherIntervals[36].dt_txt);
+    dayFiveHumidity = dayFiveHumidity / 8; //Averaging out humidity for the day
     $("#day-five-high").text(dayFiveHigh.toFixed() + " °F");
     $("#day-five-low").text(dayFiveLow.toFixed() + " °F");
     $("#day-five-humidity").text(dayFiveHumidity.toFixed() + "%");
@@ -187,7 +185,7 @@ function getFiveDayForecast(res){
 }
 
 function setDates(){
-    // Setting up current date
+    //Setting up current date
     let date = new Date();
     let currentDay = date.getDate();
     let currentMonth = date.getMonth() + 1;
@@ -195,49 +193,49 @@ function setDates(){
     let currentDate = + currentMonth + "-" + currentDay + "-" + currentYear;
     $("#current-date").text(currentDate);
 
-    // Declaring variables for each forecast date
+    //Declaring variables for each forecast date
     let fcOne = new Date();
     let fcTwo = new Date();
     let fcThree = new Date();
     let fcFour = new Date();
     let fcFive = new Date();
 
-    // Setting each forecast date variable one day beyond the previous
+    //Setting each forecast date variable one day beyond the previous
     fcOne.setDate(fcOne.getDate(currentDate) + 1);
     fcTwo.setDate(fcTwo.getDate(currentDate) + 2);
     fcThree.setDate(fcThree.getDate(currentDate) + 3);
     fcFour.setDate(fcFour.getDate(currentDate) + 4);
     fcFive.setDate(fcFive.getDate(currentDate) + 5);
 
-    // Setting the month for each forecast date variable
+    //Setting the month for each forecast date variable
     let fcOneMonth = fcOne.getMonth() + 1;
     let fcTwoMonth = fcTwo.getMonth() + 1;
     let fcThreeMonth = fcThree.getMonth() + 1;
     let fcFourMonth = fcFour.getMonth() + 1;
     let fcFiveMonth = fcFive.getMonth() + 1;
 
-    // Setting the day for each forecast date variable
+    //Setting the day for each forecast date variable
     let fcOneDay = fcOne.getDate();
     let fcTwoDay = fcTwo.getDate();
     let fcThreeDay = fcThree.getDate();
     let fcFourDay = fcFour.getDate();
     let fcFiveDay = fcFive.getDate();
 
-    // Setting the year for each forecast date variable
+    //Setting the year for each forecast date variable
     let fcOneYear = fcOne.getFullYear();
     let fcTwoYear = fcTwo.getFullYear();
     let fcThreeYear = fcThree.getFullYear();
     let fcFourYear = fcFour.getFullYear();
     let fcFiveYear = fcFive.getFullYear();
 
-    // Declaring variables to hold a formatted strings of each forecast date
+    //Declaring variables to hold a formatted string of each forecast date
     let fcOneDate = + fcOneMonth + "-" + fcOneDay + "-" + fcOneYear;
     let fcTwoDate = + fcTwoMonth + "-" + fcTwoDay + "-" + fcTwoYear;
     let fcThreeDate = + fcThreeMonth + "-" + fcThreeDay + "-" + fcThreeYear;
     let fcFourDate = + fcFourMonth + "-" + fcFourDay + "-" + fcFourYear;
     let fcFiveDate = + fcFiveMonth + "-" + fcFiveDay + "-" + fcFiveYear;
 
-    // Appending forecast dates to page
+    //Appending forecast dates to page
     $("#day-one-date").text(fcOneDate);
     $("#day-two-date").text(fcTwoDate);
     $("#day-three-date").text(fcThreeDate);
