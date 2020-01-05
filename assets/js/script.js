@@ -36,6 +36,8 @@ function getWeather(city){
 
 let recentsArray = [];
 function handleRecents(res){
+    $("#recent-searches-header").addClass("d-block");
+    
     let recentLink = $("<a>").addClass("list-group-item");
     recentLink.attr("href", "#");
 
